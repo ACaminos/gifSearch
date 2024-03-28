@@ -1,17 +1,19 @@
-import React from 'react'
+import { GifItem } from "./GifItem";
+import { useFetchGifs } from "../hooks/useFetchGifs";
 
 export const GifGrid = ( { category } ) => {
 
-  const getGifs = async() => {
-    const url = `https://api.giphy.com/v1/gifs/search?api_key=UKDssLvF2UM3gWSFMDMI8gsEdXRX0cpP&q=${ category }`
-    const resp = await fetch( url )
+  const { images, isLoading } = useFetchGifs( category )
 
-    console.log( resp )
-  }
   return (
     <>
         <h3>{ category }</h3>
-        <p>Que onda</p>
+
+        <div className="card-grid">
+            { images.map( image => (
+              <GifItem key={ image.id } { ...image } />
+            ) ) }
+        </div>
     </>
   )
 }
